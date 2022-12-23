@@ -2,3 +2,4 @@
 
 *.md text eol=lf
 *.yml text eol=lf
+Dockerfile text eol=lf

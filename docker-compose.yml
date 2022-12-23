@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  chat-envoy:
+    container_name: chat-envoy
+    image: chat/envoy
+    build:
+      context: ./envoy
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
