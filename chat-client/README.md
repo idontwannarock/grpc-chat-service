@@ -10,6 +10,8 @@ In the project directory, you can run:
 
 Regenerate protocol buffers js files in `./src/proto`.
 
+> `protoc` version must not newer than 20.2 (3.20.2) because there is bug in 21.x version causing protoc-gen-js not found error.
+
 ### `npm start`
 
 Runs the app in the development mode.\
