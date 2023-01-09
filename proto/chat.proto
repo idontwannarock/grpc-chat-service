@@ -16,3 +16,19 @@ message LoginResponse {
 service AuthGateway {
 	rpc Login (LoginRequest) returns (LoginResponse) {}
 }
+
+message ListRoomRequest {
+}
+
+message Room {
+	string id = 1;
+	int32 userCount = 2;
+}
+
+message ListRoomResponse {
+	repeated Room rooms = 1;
+}
+
+service RoomGateway {
+	rpc List (ListRoomRequest) returns (ListRoomResponse) {}
+}

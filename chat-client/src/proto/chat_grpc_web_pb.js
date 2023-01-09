@@ -135,5 +135,118 @@ proto.chat.AuthGatewayPromiseClient.prototype.login =
 };
 
 
+/**
+ * @param {string} hostname
+ * @param {?Object} credentials
+ * @param {?grpc.web.ClientOptions} options
+ * @constructor
+ * @struct
+ * @final
+ */
+proto.chat.RoomGatewayClient =
+    function(hostname, credentials, options) {
+  if (!options) options = {};
+  options.format = 'text';
+
+  /**
+   * @private @const {!grpc.web.GrpcWebClientBase} The client
+   */
+  this.client_ = new grpc.web.GrpcWebClientBase(options);
+
+  /**
+   * @private @const {string} The hostname
+   */
+  this.hostname_ = hostname.replace(/\/+$/, '');
+
+};
+
+
+/**
+ * @param {string} hostname
+ * @param {?Object} credentials
+ * @param {?grpc.web.ClientOptions} options
+ * @constructor
+ * @struct
+ * @final
+ */
+proto.chat.RoomGatewayPromiseClient =
+    function(hostname, credentials, options) {
+  if (!options) options = {};
+  options.format = 'text';
+
+  /**
+   * @private @const {!grpc.web.GrpcWebClientBase} The client
+   */
+  this.client_ = new grpc.web.GrpcWebClientBase(options);
+
+  /**
+   * @private @const {string} The hostname
+   */
+  this.hostname_ = hostname.replace(/\/+$/, '');
+
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.ListRoomRequest,
+ *   !proto.chat.ListRoomResponse>}
+ */
+const methodDescriptor_RoomGateway_List = new grpc.web.MethodDescriptor(
+  '/chat.RoomGateway/List',
+  grpc.web.MethodType.UNARY,
+  proto.chat.ListRoomRequest,
+  proto.chat.ListRoomResponse,
+  /**
+   * @param {!proto.chat.ListRoomRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.ListRoomResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.ListRoomRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.chat.ListRoomResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.ListRoomResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.RoomGatewayClient.prototype.list =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.RoomGateway/List',
+      request,
+      metadata || {},
+      methodDescriptor_RoomGateway_List,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.ListRoomRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.ListRoomResponse>}
+ *     Promise that resolves to the response
+ */
+proto.chat.RoomGatewayPromiseClient.prototype.list =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.RoomGateway/List',
+      request,
+      metadata || {},
+      methodDescriptor_RoomGateway_List);
+};
+
+
 module.exports = proto.chat;
 
