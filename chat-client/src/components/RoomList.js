@@ -1,36 +1,31 @@
-import { useState } from "react";
+function RoomListEntry(props) {
+	const { id, userCount } = props;
+	return (
+		<div>
+			<span>Room: {id}, User count: {userCount}</span>
+		</div>
+	);
+}
 
-import { RoomGatewayClient } from '../proto/chat_grpc_web_pb';
-import { ListRoomRequest } from '../proto/chat_pb';
-
-const client = new RoomGatewayClient(process.env.REACT_APP_API_URL, null, null);
-
-function RoomEntry() {
-	const [entries, setEntries] = useState([]);
-
-	client.list(new ListRoomRequest(), {}, (err, response) => {
-		const tempEntries = [];
-		response.getRoomsList().map(room => tempEntries.push({id: room.getId(), userCount: room.getUsercount()}));
-		setEntries(tempEntries);
-	});
-
-	return entries.map(({id, userCount}) => {
+function RoomListEntries(props) {
+	const { roomEntries } = props;
+	return roomEntries.map(({id, userCount}) => {
 		return (
-			<div key={id}>
-				<span>Room: {id}, User count: {userCount}</span>
-			</div>
+			<RoomListEntry
+				key={id}
+				id={id}
+				userCount={userCount}
+			/>
 		);
 	});
 }
 
-const RoomList = () => {
-	const userId = localStorage.getItem('userId');
-	const isLoggedIn = userId !== null && userId !== '';
-
+const RoomList = (props) => {
+	const { isLoggedIn, roomEntries } = props;
 	return (
 		<div>
 			<div>Room List:</div>
-			{isLoggedIn && <RoomEntry />}
+			{isLoggedIn && <RoomListEntries roomEntries={roomEntries} />}
 		</div>
 	);
 }
