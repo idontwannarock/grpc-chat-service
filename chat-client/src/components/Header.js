@@ -10,8 +10,9 @@ function NameHeader(props) {
 	);
 }
 
-function login(event, setId) {
+function handleLogin(event, setId) {
 	event.preventDefault();
+	event.stopPropagation();
 	const request = new LoginRequest();
 	request.setUsername(event.target[0].value);
 	client.login(request, {}, (err, response) => {
@@ -22,7 +23,7 @@ function login(event, setId) {
 function LoginForm(props) {
 	const { name, setName, setId } = props;
 	return (
-		<form onSubmit={event => login(event, setId)}>
+		<form onSubmit={event => handleLogin(event, setId)}>
 			<input
 				type={"text"}
 				value={name}
