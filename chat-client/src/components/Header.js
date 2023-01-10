@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { AuthGatewayClient } from '../proto/chat_grpc_web_pb';
 import { LoginRequest } from '../proto/chat_pb';
 
@@ -36,29 +34,14 @@ function LoginForm(props) {
 	);
 }
 
-const Header = () => {
-	const [username, setUsername] = useState('');
-
-	useEffect(() => {
-		if (username !== '') {
-			localStorage.setItem('username', username);
-		}
-	}, [username]);
-
-	const [userId, setUserId] = useState('');
-
-	useEffect(() => {
-		if (username !== '' && userId !== '') {
-			localStorage.setItem('userId', userId);
-		}
-	}, [userId, username])
-
+const Header = (props) => {
+	const { isLoggedIn, username, setUsername, setUserId } = props;
 	return (
-		<>
-			{userId !== ''
+		<div>
+			{isLoggedIn
 				? <NameHeader name={username}/>
 				: <LoginForm name={username} setName={setUsername} setId={setUserId}/>}
-		</>
+		</div>
 	);
 }
 
